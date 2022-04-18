@@ -5,11 +5,13 @@ import me.sat7.dynamicshop.commands.DSCMD;
 import me.sat7.dynamicshop.commands.Shop;
 import me.sat7.dynamicshop.files.CustomConfig;
 import me.sat7.dynamicshop.utilities.ItemsUtil;
+import me.sat7.dynamicshop.utilities.LangUtil;
 import me.sat7.dynamicshop.utilities.ShopUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class Edit extends DSCMD
@@ -27,12 +29,12 @@ public class Edit extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "edit"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop <shopname> edit <item> <value> <median> <stock>");
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop <shopname> edit <item> <value> <min value> <max value> <median> <stock> [<max stock>]");
-        player.sendMessage(" - " + t(player, "HELP.SHOP_EDIT"));
-        player.sendMessage(" - " + t(player, "HELP.PRICE"));
-        player.sendMessage(" - " + t(player, "HELP.INF_STATIC"));
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "edit")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop <shopname> edit <item> <value> <median> <stock>"));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop <shopname> edit <item> <value> <min value> <max value> <median> <stock> [<max stock>]"));
+        player.sendMessage(" - " + papi(player,t("HELP.SHOP_EDIT")));
+        player.sendMessage(" - " + papi(player,t("HELP.PRICE")));
+        player.sendMessage(" - " + papi(player,t("HELP.INF_STATIC")));
 
         player.sendMessage("");
     }
@@ -60,7 +62,7 @@ public class Edit extends DSCMD
             idx = Integer.parseInt(temp[0]);
             if (!shopData.get().contains(temp[0]))
             {
-                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_ITEM_NAME"));
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.WRONG_ITEM_NAME")));
                 return;
             }
             buyValue = Double.parseDouble(args[4]);
@@ -69,7 +71,7 @@ public class Edit extends DSCMD
             if (buyValue <= 0)
             {
                 ShopUtil.removeItemFromShop(shopName, idx);
-                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.ITEM_DELETED"));
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("MESSAGE.ITEM_DELETED")));
                 return;
             } else
             {
@@ -92,30 +94,30 @@ public class Edit extends DSCMD
                     // 유효성 검사
                     if (valueMax > 0 && valueMin > 0 && valueMin >= valueMax)
                     {
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.MAX_LOWER_THAN_MIN"));
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.MAX_LOWER_THAN_MIN")));
                         return;
                     }
                     if (valueMax > 0 && buyValue > valueMax)
                     {
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.DEFAULT_VALUE_OUT_OF_RANGE"));
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.DEFAULT_VALUE_OUT_OF_RANGE")));
                         return;
                     }
                     if (valueMin > 0 && buyValue < valueMin)
                     {
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.DEFAULT_VALUE_OUT_OF_RANGE"));
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.DEFAULT_VALUE_OUT_OF_RANGE")));
                         return;
                     }
                 }
             }
         } catch (Exception e)
         {
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_DATATYPE"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.WRONG_DATATYPE")));
             return;
         }
 
         // 수정
         ShopUtil.editShopItem(shopName, idx, buyValue, buyValue, valueMin, valueMax, median, stock, maxStock);
-        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.ITEM_UPDATED"));
+        sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("MESSAGE.ITEM_UPDATED")));
         ItemsUtil.sendItemInfo(sender, shopName, idx, "HELP.ITEM_INFO");
     }
 }

@@ -1,12 +1,13 @@
 package me.sat7.dynamicshop.guis;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import me.sat7.dynamicshop.DynaShopAPI;
+import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.files.CustomConfig;
+import me.sat7.dynamicshop.jobshook.JobsHook;
 import me.sat7.dynamicshop.transactions.Buy;
+import me.sat7.dynamicshop.transactions.Calc;
 import me.sat7.dynamicshop.transactions.Sell;
+import me.sat7.dynamicshop.utilities.ShopUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -19,14 +20,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import me.sat7.dynamicshop.DynamicShop;
-import me.sat7.dynamicshop.jobshook.JobsHook;
-import me.sat7.dynamicshop.transactions.Calc;
-import me.sat7.dynamicshop.utilities.ShopUtil;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
-import static me.sat7.dynamicshop.utilities.LangUtil.n;
-import static me.sat7.dynamicshop.utilities.LangUtil.t;
+import static me.sat7.dynamicshop.utilities.LangUtil.*;
 import static me.sat7.dynamicshop.utilities.LayoutUtil.l;
 import static me.sat7.dynamicshop.utilities.MathUtil.Clamp;
 
@@ -67,8 +65,8 @@ public final class ItemTrade extends InGameUI
 
         DynamicShop.userInteractItem.put(player.getUniqueId(), shopName + "/" + tradeIdx);
 
-        String uiTitle = shopData.getBoolean("Options.enable", true) ? "" : t(player, "SHOP.DISABLED");
-        uiTitle += t(player, "TRADE_TITLE");
+        String uiTitle = shopData.getBoolean("Options.enable", true) ? "" : papi(player,t("SHOP.DISABLED"));
+        uiTitle += papi(player,t("TRADE_TITLE"));
         inventory = Bukkit.createInventory(player, 18, uiTitle);
 
         CreateBalanceButton();
@@ -106,10 +104,10 @@ public final class ItemTrade extends InGameUI
             {
                 if (data.get().contains("Options.flag.jobpoint"))
                 {
-                    player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "TRADE.BALANCE") + ":§f " + n(JobsHook.getCurJobPoints(player)) + "Points");
+                    player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("TRADE.BALANCE") + ":§f " + n(JobsHook.getCurJobPoints(player)) + "Points"));
                 } else
                 {
-                    player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "TRADE.BALANCE") + ":§f " + n(DynamicShop.getEconomy().getBalance(player)));
+                    player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("TRADE.BALANCE") + ":§f " + n(DynamicShop.getEconomy().getBalance(player))));
                 }
             } else if (e.getSlot() == SELL_ONLY_TOGGLE)
             {
@@ -162,7 +160,7 @@ public final class ItemTrade extends InGameUI
                     deliveryCharge = CalcShipping(player, shopName);
                     if (deliveryCharge == -1)
                     {
-                        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.DELIVERY_CHARGE_NA")); // 다른 월드로 배달 불가능
+                        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("MESSAGE.DELIVERY_CHARGE_NA"))); // 다른 월드로 배달 불가능
                         return;
                     }
                 }
@@ -238,12 +236,12 @@ public final class ItemTrade extends InGameUI
             if (optionS.contains("flag.jobpoint")) balStr += "Points";
         } else
         {
-            balStr = t(player, "TRADE.SHOP_BAL_INF");
+            balStr = papi(player,t("TRADE.SHOP_BAL_INF"));
         }
 
         String shopBalanceString = "";
         if (!shopData.contains("Options.flag.hideshopbalance"))
-            shopBalanceString = t(player, "TRADE.SHOP_BAL").replace("{num}", balStr);
+            shopBalanceString = papi(player,t("TRADE.SHOP_BAL").replace("{num}", balStr));
 
         moneyLore = moneyLore.replace("{\\nPlayerBalance}", "\n" + myBalanceString);
         moneyLore = moneyLore.replace("{\\nShopBalance}", shopBalanceString.isEmpty() ? "" : "\n" + shopBalanceString);
@@ -254,27 +252,27 @@ public final class ItemTrade extends InGameUI
         if (ChatColor.stripColor(temp).startsWith("\n"))
             moneyLore = moneyLore.replaceFirst("\n", "");
 
-        CreateButton(CHECK_BALANCE, Material.EMERALD, t(player, "TRADE.BALANCE"), moneyLore);
+        CreateButton(CHECK_BALANCE, Material.EMERALD, papi(player,t("TRADE.BALANCE")), moneyLore);
     }
 
     private void CreateSellBuyOnlyToggle()
     {
         ArrayList<String> sellLore = new ArrayList<>();
-        if (sellBuyOnly.equalsIgnoreCase("SellOnly")) sellLore.add(t(player, "TRADE.SELL_ONLY_LORE"));
-        else if (sellBuyOnly.equalsIgnoreCase("BuyOnly")) sellLore.add(t(player,"TRADE.BUY_ONLY_LORE"));
+        if (sellBuyOnly.equalsIgnoreCase("SellOnly")) sellLore.add(papi(player,t("TRADE.SELL_ONLY_LORE")));
+        else if (sellBuyOnly.equalsIgnoreCase("BuyOnly")) sellLore.add(papi(player,t("TRADE.BUY_ONLY_LORE")));
 
         if (player.hasPermission(P_ADMIN_SHOP_EDIT))
-            sellLore.add(t(player,"TRADE.TOGGLE_SELLABLE"));
+            sellLore.add(papi(player,t("TRADE.TOGGLE_SELLABLE")));
 
         ArrayList<String> buyLore = new ArrayList<>();
-        if (sellBuyOnly.equalsIgnoreCase("SellOnly")) buyLore.add(t(player,"TRADE.SELL_ONLY_LORE"));
-        else if (sellBuyOnly.equalsIgnoreCase("BuyOnly")) buyLore.add(t(player,"TRADE.BUY_ONLY_LORE"));
+        if (sellBuyOnly.equalsIgnoreCase("SellOnly")) buyLore.add(papi(player,t("TRADE.SELL_ONLY_LORE")));
+        else if (sellBuyOnly.equalsIgnoreCase("BuyOnly")) buyLore.add(papi(player,t("TRADE.BUY_ONLY_LORE")));
 
         if (player.hasPermission(P_ADMIN_SHOP_EDIT))
-            buyLore.add(t(player,"TRADE.TOGGLE_BUYABLE"));
+            buyLore.add(papi(player,t("TRADE.TOGGLE_BUYABLE")));
 
-        CreateButton(SELL_ONLY_TOGGLE, Material.GREEN_STAINED_GLASS, t(player, "TRADE.SELL"), sellLore);
-        CreateButton(BUY_ONLY_TOGGLE, Material.RED_STAINED_GLASS, t(player, "TRADE.BUY"), buyLore);
+        CreateButton(SELL_ONLY_TOGGLE, Material.GREEN_STAINED_GLASS, papi(player,t("TRADE.SELL")), sellLore);
+        CreateButton(BUY_ONLY_TOGGLE, Material.RED_STAINED_GLASS, papi(player,t("TRADE.BUY")), buyLore);
     }
 
     private void CreateTradeButtons()
@@ -304,11 +302,11 @@ public final class ItemTrade extends InGameUI
             if (sell)
             {
                 lore = l("TRADE_VIEW.SELL");
-                priceText = t(player, "TRADE.SELL_PRICE").replace("{num}", n(price));
+                priceText = papi(player,t("TRADE.SELL_PRICE").replace("{num}", n(price)));
             } else
             {
                 lore = l("TRADE_VIEW.BUY");
-                priceText = t(player, "TRADE.PRICE").replace("{num}", n(price));
+                priceText = papi(player,t("TRADE.PRICE").replace("{num}", n(price)));
             }
 
             if (!sell)
@@ -322,10 +320,10 @@ public final class ItemTrade extends InGameUI
             {
                 if (stock <= 0)
                 {
-                    stockText = t(player, "TRADE.INF_STOCK");
+                    stockText = papi(player,t("TRADE.INF_STOCK"));
                 } else if (DynamicShop.plugin.getConfig().getBoolean("UI.DisplayStockAsStack"))
                 {
-                    stockText = t(player, "TRADE.STACKS").replace("{num}", n(stock / 64));
+                    stockText = papi(player,t("TRADE.STACKS").replace("{num}", n(stock / 64)));
                 } else
                 {
                     stockText = n(stock);
@@ -337,16 +335,16 @@ public final class ItemTrade extends InGameUI
             {
                 if (DynamicShop.plugin.getConfig().getBoolean("UI.DisplayStockAsStack"))
                 {
-                    maxStockText = t(player, "TRADE.STACKS").replace("{num}", n(maxStock / 64));
+                    maxStockText = papi(player,t("TRADE.STACKS").replace("{num}", n(maxStock / 64)));
                 } else
                 {
                     maxStockText = n(maxStock);
                 }
 
-                stockText = t(player, "SHOP.STOCK_2").replace("{stock}", stockText).replace("{max_stock}", maxStockText);
+                stockText = papi(player,t("SHOP.STOCK_2").replace("{stock}", stockText).replace("{max_stock}", maxStockText));
             } else
             {
-                stockText = t(player, "SHOP.STOCK").replace("{num}", stockText);
+                stockText = papi(player,t("SHOP.STOCK").replace("{num}", stockText));
             }
 
             String deliveryChargeText = "";
@@ -354,14 +352,14 @@ public final class ItemTrade extends InGameUI
             {
                 if (sell && price < deliveryCharge)
                 {
-                    deliveryChargeText = "§c" + ChatColor.stripColor(t(player,"MESSAGE.DELIVERY_CHARGE")).replace("{fee}", n(deliveryCharge));
+                    deliveryChargeText = "§c" + ChatColor.stripColor(papi(player,t("MESSAGE.DELIVERY_CHARGE")).replace("{fee}", n(deliveryCharge)));
                 } else
                 {
-                    deliveryChargeText = t(player, "MESSAGE.DELIVERY_CHARGE").replace("{fee}", n(deliveryCharge));
+                    deliveryChargeText = papi(player,t("MESSAGE.DELIVERY_CHARGE").replace("{fee}", n(deliveryCharge)));
                 }
             }
 
-            String tradeLoreText = sell ? t(player, "TRADE.CLICK_TO_SELL") : t(player, "TRADE.CLICK_TO_BUY");
+            String tradeLoreText = sell ? papi(player,t("TRADE.CLICK_TO_SELL")) : papi(player,t("TRADE.CLICK_TO_BUY"));
             tradeLoreText = tradeLoreText.replace("{amount}", n(amount));
 
             lore = lore.replace("{\\nPrice}", priceText.isEmpty() ? "" : "\n" + priceText);
@@ -401,7 +399,7 @@ public final class ItemTrade extends InGameUI
         String permission = options.getString("permission");
         if (permission != null && permission.length() > 0 && !player.hasPermission(permission) && !player.hasPermission(permission + ".sell"))
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.NO_PERMISSION"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.NO_PERMISSION")));
             return;
         }
 
@@ -410,7 +408,7 @@ public final class ItemTrade extends InGameUI
         int maxStock = shopData.getInt(tradeIdx + ".maxStock", -1);
         if (maxStock != -1 && maxStock < stock + itemStack.getAmount())
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.PURCHASE_REJECTED"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("MESSAGE.PURCHASE_REJECTED")));
             return;
         }
 
@@ -428,7 +426,7 @@ public final class ItemTrade extends InGameUI
         String permission = options.getString("permission");
         if (permission != null && permission.length() > 0 && !player.hasPermission(permission) && !player.hasPermission(permission + ".buy"))
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.NO_PERMISSION"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.NO_PERMISSION")));
             return;
         }
 
@@ -467,7 +465,7 @@ public final class ItemTrade extends InGameUI
             ItemMeta otherMeta = (ItemMeta) shopData.get(tradeIdx + ".itemStack");
             if(itemMeta == null || !itemMeta.equals(otherMeta))
             {
-                player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.INVALID_TRANSACTION"));
+                player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.INVALID_TRANSACTION")));
                 player.closeInventory();
                 return false;
             }
@@ -477,7 +475,7 @@ public final class ItemTrade extends InGameUI
 
         if(!ret)
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.SHOP_IS_CLOSED_BY_ADMIN"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("MESSAGE.SHOP_IS_CLOSED_BY_ADMIN")));
             player.closeInventory();
         }
 

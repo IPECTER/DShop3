@@ -1,6 +1,7 @@
 package me.sat7.dynamicshop.commands;
 
 import me.sat7.dynamicshop.files.CustomConfig;
+import me.sat7.dynamicshop.utilities.LangUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -8,6 +9,7 @@ import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.utilities.ShopUtil;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_DELETE_SHOP;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public final class DeleteShop extends DSCMD
@@ -22,8 +24,8 @@ public final class DeleteShop extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "§c§ldeleteshop§f§r"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds deleteshop <shopname>");
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "§c§ldeleteshop§f§r")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds deleteshop <shopname>"));
 
         player.sendMessage("");
     }
@@ -40,10 +42,10 @@ public final class DeleteShop extends DSCMD
             data.delete();
 
             ShopUtil.shopConfigFiles.remove(args[1]);
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.SHOP_DELETED"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("MESSAGE.SHOP_DELETED")));
         } else
         {
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_NOT_FOUND"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.SHOP_NOT_FOUND")));
         }
     }
 }

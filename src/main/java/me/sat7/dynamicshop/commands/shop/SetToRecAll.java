@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public final class SetToRecAll extends DSCMD
@@ -21,9 +22,9 @@ public final class SetToRecAll extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "SetToRecAll"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop <shopname> SetToRecAll");
-        player.sendMessage(" - " + t(player, "HELP.SET_TO_REC_ALL"));
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "SetToRecAll")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop <shopname> SetToRecAll"));
+        player.sendMessage(" - " + papi(player,t("HELP.SET_TO_REC_ALL")));
 
         player.sendMessage("");
     }
@@ -35,6 +36,6 @@ public final class SetToRecAll extends DSCMD
             return;
 
         ShopUtil.SetToRecommendedValueAll(args[1], sender);
-        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.ITEM_UPDATED"));
+        sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("MESSAGE.ITEM_UPDATED")));
     }
 }

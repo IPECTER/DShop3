@@ -4,11 +4,13 @@ import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.commands.DSCMD;
 import me.sat7.dynamicshop.commands.Shop;
 import me.sat7.dynamicshop.files.CustomConfig;
+import me.sat7.dynamicshop.utilities.LangUtil;
 import me.sat7.dynamicshop.utilities.ShopUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class SellBuy extends DSCMD
@@ -23,8 +25,8 @@ public class SellBuy extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "sellbuy"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop <shop name> sellbuy < sellonly | buyonly | clear >");
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "sellbuy")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop <shop name> sellbuy < sellonly | buyonly | clear >"));
 
         player.sendMessage("");
     }
@@ -72,6 +74,6 @@ public class SellBuy extends DSCMD
         }
 
         shopData.save();
-        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.CHANGES_APPLIED") + temp);
+        sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("MESSAGE.CHANGES_APPLIED") + temp));
     }
 }

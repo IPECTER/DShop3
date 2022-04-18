@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_OPEN_SHOP;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class OpenShop extends DSCMD
@@ -23,8 +24,8 @@ public class OpenShop extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "openshop"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds openshop [shopname] <playername>");
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "openshop")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds openshop [shopname] <playername>"));
         player.sendMessage("");
     }
 
@@ -44,7 +45,7 @@ public class OpenShop extends DSCMD
             shopName = args[1];
         } else
         {
-            sender.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.SHOP_NOT_FOUND"));
+            sender.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.SHOP_NOT_FOUND")));
             return;
         }
 

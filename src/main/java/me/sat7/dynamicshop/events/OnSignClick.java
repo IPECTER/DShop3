@@ -3,6 +3,7 @@ package me.sat7.dynamicshop.events;
 import me.sat7.dynamicshop.DynaShopAPI;
 import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.constants.Constants;
+import me.sat7.dynamicshop.utilities.LangUtil;
 import me.sat7.dynamicshop.utilities.ShopUtil;
 
 import org.bukkit.ChatColor;
@@ -181,7 +182,7 @@ public class OnSignClick implements Listener
                 {
                     if (p.getGameMode() == GameMode.CREATIVE && !p.hasPermission(Constants.P_ADMIN_CREATIVE))
                     {
-                        p.sendMessage(DynamicShop.dsPrefix(p) + t(p, "ERR.CREATIVE"));
+                        p.sendMessage(DynamicShop.dsPrefix(p) + LangUtil.papi(p, t( "ERR.CREATIVE")));
                         return;
                     }
 
@@ -201,7 +202,7 @@ public class OnSignClick implements Listener
                     {
                         if (!p.hasPermission(permission) && !p.hasPermission(permission + ".buy") && !p.hasPermission(permission + ".sell"))
                         {
-                            p.sendMessage(DynamicShop.dsPrefix(p) + t(p, "ERR.NO_PERMISSION"));
+                            p.sendMessage(DynamicShop.dsPrefix(p) + LangUtil.papi(p, t( "ERR.NO_PERMISSION")));
                             return;
                         }
                     }

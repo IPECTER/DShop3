@@ -10,6 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class Optional implements CommandExecutor
@@ -25,13 +26,13 @@ public class Optional implements CommandExecutor
 
             if (!player.hasPermission(Constants.P_USE))
             {
-                player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.NO_PERMISSION"));
+                player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.NO_PERMISSION")));
                 return true;
             }
 
             if (player.getGameMode() == GameMode.CREATIVE && !player.hasPermission(Constants.P_ADMIN_CREATIVE))
             {
-                player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.CREATIVE"));
+                player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.CREATIVE")));
                 return true;
             }
 

@@ -1,8 +1,9 @@
 package me.sat7.dynamicshop.guis;
 
-import java.util.ArrayList;
-
 import me.sat7.dynamicshop.DynaShopAPI;
+import me.sat7.dynamicshop.DynamicShop;
+import me.sat7.dynamicshop.models.DSItem;
+import me.sat7.dynamicshop.transactions.Calc;
 import me.sat7.dynamicshop.utilities.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,12 +14,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import me.sat7.dynamicshop.DynamicShop;
-import me.sat7.dynamicshop.models.DSItem;
-import me.sat7.dynamicshop.transactions.Calc;
+import java.util.ArrayList;
 
-import static me.sat7.dynamicshop.utilities.LangUtil.n;
-import static me.sat7.dynamicshop.utilities.LangUtil.t;
+import static me.sat7.dynamicshop.utilities.LangUtil.*;
 import static me.sat7.dynamicshop.utilities.MathUtil.Clamp;
 
 public final class ItemSettings extends InGameUI
@@ -76,23 +74,23 @@ public final class ItemSettings extends InGameUI
         this.dsItem = dsItem;
         this.currentTab = Clamp(tab, TAB_START, TAB_END);
 
-        inventory = Bukkit.createInventory(player, 36, t(player, "ITEM_SETTING_TITLE") + "§7 | §8" + shopName);
+        inventory = Bukkit.createInventory(player, 36, papi(player,t("ITEM_SETTING_TITLE") + "§7 | §8" + shopName));
 
-        String buyValueStr = t(null, "ITEM_SETTING.VALUE_BUY") + n(dsItem.getBuyValue());
-        String sellValueStr = t(null, "ITEM_SETTING.VALUE_SELL") + n(dsItem.getSellValue());
-        String priceMinStr = t(null, "ITEM_SETTING.PRICE_MIN") + n(dsItem.getMinPrice());
-        String priceMaxStr = t(null, "ITEM_SETTING.PRICE_MAX") + n(dsItem.getMaxPrice());
-        String medianStr = t(null, "ITEM_SETTING.MEDIAN") + n(dsItem.getMedian());
-        String stockStr = t(null, "ITEM_SETTING.STOCK") + n(dsItem.getStock());
-        String maxStockStr = t(null, "ITEM_SETTING.MAX_STOCK") + n(dsItem.getMaxStock());
+        String buyValueStr = papi(null,t("ITEM_SETTING.VALUE_BUY") + n(dsItem.getBuyValue()));
+        String sellValueStr = papi(null,t("ITEM_SETTING.VALUE_SELL") + n(dsItem.getSellValue()));
+        String priceMinStr = papi(null,t("ITEM_SETTING.PRICE_MIN") + n(dsItem.getMinPrice()));
+        String priceMaxStr = papi(null,t("ITEM_SETTING.PRICE_MAX") + n(dsItem.getMaxPrice()));
+        String medianStr = papi(null,t("ITEM_SETTING.MEDIAN") + n(dsItem.getMedian()));
+        String stockStr = papi(null,t("ITEM_SETTING.STOCK") + n(dsItem.getStock()));
+        String maxStockStr = papi(null,t("ITEM_SETTING.MAX_STOCK") + n(dsItem.getMaxStock()));
 
-        String sellValueLore = (dsItem.getBuyValue() != dsItem.getSellValue()) ? "§8(" + t(null, "ITEM_SETTING.TAX_IGNORED") + ")" : "";
-        String medianLore = (dsItem.getMedian() <= 0) ? "§8(" + t(null, "ITEM_SETTING.STATIC_PRICE") + ")\n" : "";
-        medianLore += t(null, "ITEM_SETTING.MEDIAN_HELP");
-        String stockLore = (dsItem.getStock() <= 0) ? "§8(" + t(null, "ITEM_SETTING.INF_STOCK") + ")" : "";
-        String maxPriceLore = (dsItem.getMaxPrice() <= 0) ? "§8(" + t(null, "ITEM_SETTING.UNLIMITED") + ")" : "";
-        String maxStockLore = (dsItem.getMaxStock() <= 0) ? "§8(" + t(null, "ITEM_SETTING.UNLIMITED") + ")" : "";
-        maxStockLore += "\n" + t(null, "ITEM_SETTING.MAX_STOCK_LORE");
+        String sellValueLore = (dsItem.getBuyValue() != dsItem.getSellValue()) ? "§8(" + papi(null,t("ITEM_SETTING.TAX_IGNORED") + ")") : "";
+        String medianLore = (dsItem.getMedian() <= 0) ? "§8(" + papi(null,t("ITEM_SETTING.STATIC_PRICE") + ")\n") : "";
+        medianLore += papi(null,t("ITEM_SETTING.MEDIAN_HELP"));
+        String stockLore = (dsItem.getStock() <= 0) ? "§8(" + papi(null,t("ITEM_SETTING.INF_STOCK") + ")") : "";
+        String maxPriceLore = (dsItem.getMaxPrice() <= 0) ? "§8(" + papi(null,t("ITEM_SETTING.UNLIMITED") + ")") : "";
+        String maxStockLore = (dsItem.getMaxStock() <= 0) ? "§8(" + papi(null,t("ITEM_SETTING.UNLIMITED") + ")") : "";
+        maxStockLore += "\n" + papi(null,t("ITEM_SETTING.MAX_STOCK_LORE"));
 
         Material red = Material.RED_STAINED_GLASS_PANE;
         Material gray = Material.GRAY_STAINED_GLASS_PANE;
@@ -129,13 +127,13 @@ public final class ItemSettings extends InGameUI
         else if (currentTab == MAX_STOCK) maxStockStr = "§3>" + maxStockStr;
 
         if (dsItem.getMaxPrice() <= 0)
-            priceMaxStr = priceMaxStr + "§8(" + ChatColor.stripColor(t(null, "ITEM_SETTING.UNLIMITED")) + ")";
+            priceMaxStr = priceMaxStr + "§8(" + ChatColor.stripColor(papi(null,t("ITEM_SETTING.UNLIMITED")) + ")");
         if (dsItem.getMedian() <= 0)
-            medianStr = medianStr + "§8(" + ChatColor.stripColor(t(null, "ITEM_SETTING.STATIC_PRICE")) + ")";
+            medianStr = medianStr + "§8(" + ChatColor.stripColor(papi(null,t("ITEM_SETTING.STATIC_PRICE")) + ")");
         if (dsItem.getStock() <= 0)
-            stockStr = stockStr + "§8(" + ChatColor.stripColor(t(null, "ITEM_SETTING.INF_STOCK")) + ")";
+            stockStr = stockStr + "§8(" + ChatColor.stripColor(papi(null,t("ITEM_SETTING.INF_STOCK")) + ")");
         if (dsItem.getMaxStock() <= 0)
-            maxStockStr = maxStockStr + "§8(" + ChatColor.stripColor(t(null, "ITEM_SETTING.UNLIMITED")) + ")";
+            maxStockStr = maxStockStr + "§8(" + ChatColor.stripColor(papi(null,t("ITEM_SETTING.UNLIMITED")) + ")");
 
         ArrayList<String> editBtnLore = new ArrayList<>();
         editBtnLore.add("§3§m                       ");
@@ -156,11 +154,11 @@ public final class ItemSettings extends InGameUI
 
             if (dsItem.getBuyValue() != dsItem.getSellValue())
             {
-                editBtnLore.add("§7" + ChatColor.stripColor(t(null, "ITEM_SETTING.TAX_IGNORED")));
+                editBtnLore.add("§7" + ChatColor.stripColor(papi(null,t("ITEM_SETTING.TAX_IGNORED"))));
                 sellPrice = dsItem.getSellValue();
             } else
             {
-                String taxStr = "§7" + ChatColor.stripColor(t(null, "TAX.SALES_TAX")) + ": ";
+                String taxStr = "§7" + ChatColor.stripColor(papi(null,t("TAX.SALES_TAX")) + ": ");
                 taxStr += Calc.getTaxRate(shopName) + "%";
                 editBtnLore.add(taxStr);
                 sellPrice = buyPrice - ((buyPrice / 100.0) * Calc.getTaxRate(shopName));
@@ -173,11 +171,11 @@ public final class ItemSettings extends InGameUI
 
             if (dsItem.getBuyValue() != dsItem.getSellValue()) // 판매가 별도설정
             {
-                editBtnLore.add("§7" + ChatColor.stripColor(t(null, "ITEM_SETTING.TAX_IGNORED")));
+                editBtnLore.add("§7" + ChatColor.stripColor(papi(null,t("ITEM_SETTING.TAX_IGNORED"))));
                 sellPrice = (dsItem.getSellValue() * dsItem.getMedian()) / dsItem.getStock();
             } else
             {
-                String taxStr = "§7" + ChatColor.stripColor(t(null, "TAX.SALES_TAX")) + ": ";
+                String taxStr = "§7" + ChatColor.stripColor(papi(null,t("TAX.SALES_TAX")) + ": ");
                 FileConfiguration config = ShopUtil.shopConfigFiles.get(shopName).get();
                 if (config.contains("Options.SalesTax"))
                 {
@@ -194,11 +192,11 @@ public final class ItemSettings extends InGameUI
             }
         }
 
-        editBtnLore.add(t(null, "ITEM_SETTING.BUY").replace("{num}", n(buyPrice)));
-        editBtnLore.add(t(null, "ITEM_SETTING.SELL").replace("{num}", n(sellPrice)));
+        editBtnLore.add(papi(null,t("ITEM_SETTING.BUY").replace("{num}", n(buyPrice))));
+        editBtnLore.add(papi(null,t("ITEM_SETTING.SELL").replace("{num}", n(sellPrice))));
 
         CreateButton(RESET, white, "Reset", editBtnLore);
-        CreateButton(ROUND_DOWN, white, t(null, "ITEM_SETTING.ROUND_DOWN"), editBtnLore);
+        CreateButton(ROUND_DOWN, white, papi(null,t("ITEM_SETTING.ROUND_DOWN")), editBtnLore);
         CreateButton(DIVIDE, white, "/2", editBtnLore);
         CreateButton(MULTIPLY, white, "x2", editBtnLore);
 
@@ -213,7 +211,7 @@ public final class ItemSettings extends InGameUI
             CreateButton(16, white, "+10", editBtnLore);
             CreateButton(17, white, "+100", editBtnLore);
 
-            if (currentTab >= SELL_VALUE) CreateButton(SET_TO_OTHER, yellow, t(null, "ITEM_SETTING.SET_TO_VALUE"), editBtnLore);
+            if (currentTab >= SELL_VALUE) CreateButton(SET_TO_OTHER, yellow, papi(null,t("ITEM_SETTING.SET_TO_VALUE")), editBtnLore);
         } else
         {
             CreateButton(9, white, "-1000", editBtnLore);
@@ -225,9 +223,9 @@ public final class ItemSettings extends InGameUI
             CreateButton(16, white, "+100", editBtnLore);
             CreateButton(17, white, "+1000", editBtnLore);
 
-            if (currentTab == MEDIAN) CreateButton(SET_TO_OTHER, yellow, t(null, "ITEM_SETTING.SET_TO_STOCK"), editBtnLore);
-            else if (currentTab == STOCK) CreateButton(SET_TO_OTHER, yellow, t(null, "ITEM_SETTING.SET_TO_MEDIAN"), editBtnLore);
-            else if (currentTab == MAX_STOCK) CreateButton(SET_TO_OTHER, yellow, t(null, "ITEM_SETTING.SET_TO_STOCK"), editBtnLore);
+            if (currentTab == MEDIAN) CreateButton(SET_TO_OTHER, yellow, papi(null,t("ITEM_SETTING.SET_TO_STOCK")), editBtnLore);
+            else if (currentTab == STOCK) CreateButton(SET_TO_OTHER, yellow, papi(null,t("ITEM_SETTING.SET_TO_MEDIAN")), editBtnLore);
+            else if (currentTab == MAX_STOCK) CreateButton(SET_TO_OTHER, yellow, papi(null,t("ITEM_SETTING.SET_TO_STOCK")), editBtnLore);
         }
 
         inventory.setItem(SAMPLE_ITEM, dsItem.getItemStack()); // 아이탬 견본
@@ -237,7 +235,7 @@ public final class ItemSettings extends InGameUI
         String recommendLore;
         if (worth == 0)
         {
-            recommendLore = t(player, "ERR.NO_RECOMMEND_DATA");
+            recommendLore = papi(player,t("ERR.NO_RECOMMEND_DATA"));
         } else
         {
             int sugMid = ShopUtil.CalcRecommendedMedian(worth, DynamicShop.plugin.getConfig().getInt("Shop.NumberOfPlayer"));
@@ -249,24 +247,24 @@ public final class ItemSettings extends InGameUI
             String medianChanged = (dsItem.getMedian() == sugMid) ? " ▶§f " : " ▶§a ";
             String stockChanged = (dsItem.getStock() == sugMid) ? " ▶§f " : " ▶§a ";
 
-            recommendLore = t(null, "ITEM_SETTING.VALUE_BUY") + "\n"
+            recommendLore = papi(null,t("ITEM_SETTING.VALUE_BUY") + "\n"
                     + "§7 " + dsItem.getBuyValue() + worthChanged + worth + "\n"
-                    + t(null, "ITEM_SETTING.VALUE_SELL") + "\n"
+                    + papi(null,t("ITEM_SETTING.VALUE_SELL")) + "\n"
                     + "§7 " + dsItem.getSellValue() + worthChanged2 + worth + "\n"
-                    //+ t(null, "ITEM_SETTING.PRICE_MIN") + "\n"
+                    //+ p(null,t("ITEM_SETTING.PRICE_MIN") + "\n"
                     //+ "§7 " + dsItem.getMinPrice() + minChanged + 0.01 + "\n"
-                    //+ t(null, "ITEM_SETTING.PRICE_MAX") + "\n"
+                    //+ p(null,t("ITEM_SETTING.PRICE_MAX") + "\n"
                     //+ "§7 " + dsItem.getMaxPrice() + maxChanged + -1 + "\n"
-                    + t(null, "ITEM_SETTING.MEDIAN") + "\n"
+                    + papi(null,t("ITEM_SETTING.MEDIAN")) + "\n"
                     + "§7 " + dsItem.getMedian() + medianChanged + sugMid + "\n"
-                    + t(null, "ITEM_SETTING.STOCK") + "\n"
-                    + "§7 " + dsItem.getStock() + stockChanged + sugMid;
+                    + papi(null,t("ITEM_SETTING.STOCK")) + "\n"
+                    + "§7 " + dsItem.getStock() + stockChanged + sugMid);
         }
 
-        CreateButton(RECOMMEND, Material.NETHER_STAR, t(player, "ITEM_SETTING.RECOMMEND"), recommendLore); // 추천 버튼
-        CreateButton(DONE, Material.STRUCTURE_VOID, t(player, "ITEM_SETTING.DONE"), t(player, "ITEM_SETTING.DONE_LORE")); // 완료 버튼
-        CreateButton(CLOSE, Material.BARRIER, t(player, "ITEM_SETTING.CLOSE"), t(player, "ITEM_SETTING.CLOSE_LORE")); // 닫기 버튼
-        CreateButton(REMOVE, Material.BONE, t(player, "ITEM_SETTING.REMOVE"), t(player, "ITEM_SETTING.REMOVE_LORE")); // 삭제 버튼
+        CreateButton(RECOMMEND, Material.NETHER_STAR, papi(player,t("ITEM_SETTING.RECOMMEND")), recommendLore); // 추천 버튼
+        CreateButton(DONE, Material.STRUCTURE_VOID, papi(player,t("ITEM_SETTING.DONE")), papi(player,t("ITEM_SETTING.DONE_LORE"))); // 완료 버튼
+        CreateButton(CLOSE, Material.BARRIER, papi(player,t("ITEM_SETTING.CLOSE")), papi(player,t("ITEM_SETTING.CLOSE_LORE"))); // 닫기 버튼
+        CreateButton(REMOVE, Material.BONE, papi(player,t("ITEM_SETTING.REMOVE")), papi(player,t("ITEM_SETTING.REMOVE_LORE"))); // 삭제 버튼
 
         return inventory;
     }
@@ -309,27 +307,27 @@ public final class ItemSettings extends InGameUI
         // 유효성 검사
         if (maxValue > 0 && buyValue > maxValue)
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.DEFAULT_VALUE_OUT_OF_RANGE"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.DEFAULT_VALUE_OUT_OF_RANGE")));
             return;
         }
         if (minValue > 0 && buyValue < minValue)
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.DEFAULT_VALUE_OUT_OF_RANGE"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.DEFAULT_VALUE_OUT_OF_RANGE")));
             return;
         }
         if (maxValue > 0 && sellValue > maxValue)
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.DEFAULT_VALUE_OUT_OF_RANGE"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.DEFAULT_VALUE_OUT_OF_RANGE")));
             return;
         }
         if (minValue > 0 && sellValue < minValue)
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.DEFAULT_VALUE_OUT_OF_RANGE"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.DEFAULT_VALUE_OUT_OF_RANGE")));
             return;
         }
         if (maxValue > 0 && minValue > 0 && minValue >= maxValue)
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.MAX_LOWER_THAN_MIN"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.MAX_LOWER_THAN_MIN")));
             return;
         }
 
@@ -339,7 +337,7 @@ public final class ItemSettings extends InGameUI
         {
             ShopUtil.editShopItem(shopName, existSlot, buyValue, sellValue, minValue, maxValue, median, stock, maxStock);
             DynaShopAPI.openShopGui(player, shopName, existSlot / 45 + 1);
-            SoundUtil.playerSoundEffect(player, "addItem");
+            SoundUtil.playerSoundEffect(player,"addItem");
         } else
         {
             int idx = -1;
@@ -351,7 +349,7 @@ public final class ItemSettings extends InGameUI
             {
                 ShopUtil.addItemToShop(shopName, idx, inventory.getItem(SAMPLE_ITEM), buyValue, sellValue, minValue, maxValue, median, stock, maxStock);
                 DynaShopAPI.openShopGui(player, shopName, shopSlotIndex / 45 + 1);
-                SoundUtil.playerSoundEffect(player, "addItem");
+                SoundUtil.playerSoundEffect(player,"addItem");
             }
         }
     }
@@ -359,9 +357,9 @@ public final class ItemSettings extends InGameUI
     private void RemoveItem()
     {
         ShopUtil.removeItemFromShop(shopName, shopSlotIndex);
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.ITEM_DELETED"));
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("MESSAGE.ITEM_DELETED")));
         DynaShopAPI.openShopGui(player, shopName, shopSlotIndex / 45 + 1);
-        SoundUtil.playerSoundEffect(player, "deleteItem");
+        SoundUtil.playerSoundEffect(player,"deleteItem");
     }
 
     private void SetToRecommend()
@@ -370,13 +368,13 @@ public final class ItemSettings extends InGameUI
 
         if (worth == 0)
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.NO_RECOMMEND_DATA"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.NO_RECOMMEND_DATA")));
         } else
         {
             int numberOfPlayer = DynamicShop.plugin.getConfig().getInt("Shop.NumberOfPlayer");
             int sugMid = ShopUtil.CalcRecommendedMedian(worth, numberOfPlayer);
 
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.RECOMMEND_APPLIED").replace("{playerNum}", numberOfPlayer + ""));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("MESSAGE.RECOMMEND_APPLIED").replace("{playerNum}", numberOfPlayer + "")));
 
             DynaShopAPI.openItemSettingGui(player, shopName, shopSlotIndex, currentTab, inventory.getItem(SAMPLE_ITEM),
                     worth, worth, minValue, maxValue, sugMid, sugMid, maxStock);
@@ -619,6 +617,6 @@ public final class ItemSettings extends InGameUI
     {
         ValueValidation();
         DynaShopAPI.openItemSettingGui(player, shopName, shopSlotIndex, currentTab, inventory.getItem(SAMPLE_ITEM), buyValue, sellValue, minValue, maxValue, median, stock, maxStock);
-        SoundUtil.playerSoundEffect(player, "editItem");
+        SoundUtil.playerSoundEffect(player,"editItem");
     }
 }

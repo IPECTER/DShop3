@@ -1,8 +1,8 @@
 package me.sat7.dynamicshop.utilities;
 
-import java.io.File;
-import java.util.*;
-
+import me.sat7.dynamicshop.DynamicShop;
+import me.sat7.dynamicshop.constants.Constants;
+import me.sat7.dynamicshop.files.CustomConfig;
 import me.sat7.dynamicshop.transactions.Calc;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -10,10 +10,13 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import me.sat7.dynamicshop.DynamicShop;
-import me.sat7.dynamicshop.constants.Constants;
-import me.sat7.dynamicshop.files.CustomConfig;
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public final class ShopUtil
@@ -430,7 +433,7 @@ public final class ShopUtil
             {
                 DynamicShop.console.sendMessage(Constants.DYNAMIC_SHOP_PREFIX +
                         shopName + ", " + linkedShop + "/ " +
-                        t(null, "ERR.SHOP_LINK_TARGET_ERR"));
+                        papi(null,t("ERR.SHOP_LINK_TARGET_ERR")));
 
                 data.get().set("Options.Balance", null);
                 data.save();
@@ -516,7 +519,7 @@ public final class ShopUtil
                 } else
                 {
                     if (sender != null)
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.NO_RECOMMEND_DATA") + " : " + itemName);
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.NO_RECOMMEND_DATA") + " : " + itemName));
                 }
             } catch (Exception ignored)
             {

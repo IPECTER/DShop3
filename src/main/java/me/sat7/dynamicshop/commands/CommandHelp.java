@@ -7,6 +7,7 @@ import me.sat7.dynamicshop.DynamicShop;
 
 import java.util.UUID;
 
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public final class CommandHelp extends DSCMD
@@ -20,9 +21,9 @@ public final class CommandHelp extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "cmdHelp"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds cmdHelp <on | off>");
-        player.sendMessage(" - " + t(player, "HELP.CMD"));
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "cmdHelp")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds cmdHelp <on | off>"));
+        player.sendMessage(" - " + papi(player,t("HELP.CMD")));
 
         player.sendMessage("");
     }
@@ -51,7 +52,7 @@ public final class CommandHelp extends DSCMD
             DynamicShop.ccUser.save();
         } else
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.WRONG_USAGE"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.WRONG_USAGE")));
         }
     }
 }

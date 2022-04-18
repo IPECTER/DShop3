@@ -1,17 +1,15 @@
 package me.sat7.dynamicshop.utilities;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.sat7.dynamicshop.DynamicShop;
+import me.sat7.dynamicshop.constants.Constants;
+import me.sat7.dynamicshop.files.CustomConfig;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
-
-import me.sat7.dynamicshop.DynamicShop;
-import me.sat7.dynamicshop.constants.Constants;
-import me.sat7.dynamicshop.files.CustomConfig;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
@@ -699,21 +697,12 @@ public final class LangUtil
 
     public static final Pattern HEX_PATTERN = Pattern.compile("(#[A-Fa-f0-9]{6})");
 
-    public static String t(Player player, String key)
-    {
-        return t(player, key, true);
+
+    public static String t(String key) {
+    return t(key, true);
     }
 
-    public static String t(CommandSender sender, String key)
-    {
-        Player player = null;
-        if(sender instanceof Player)
-            player = (Player) sender;
-
-        return t(player, key, true);
-    }
-
-    public static String t(Player player, String key, boolean hexConvert)
+    public static String t(String key, boolean hexConvert)
     {
         String temp = ccLang.get().getString(key);
         if(temp == null || temp.isEmpty())
@@ -727,11 +716,7 @@ public final class LangUtil
                 temp = temp.replace(matcher.group(), "" + ChatColor.of(matcher.group()));
             }
         }
-
-        if(player != null && DynamicShop.isPapiExist && DynamicShop.plugin.getConfig().getBoolean("UI.UsePlaceholderAPI"))
-            return PlaceholderAPI.setPlaceholders(player, temp);
-        else
-            return temp;
+        return temp;
     }
 
     public static String TranslateHexColor(String message)
@@ -839,5 +824,19 @@ public final class LangUtil
     public static String n(double i)
     {
         return doubleFormat.format(i);
+    }
+    public static String papi(CommandSender sender, String key)
+    {
+        Player player = null;
+        if(sender instanceof Player)
+            player = (Player) sender;
+
+        return papi(player, key);
+    }
+    public static String papi(Player player, String string){
+        if(player != null && DynamicShop.isPapiExist && DynamicShop.plugin.getConfig().getBoolean("UI.UsePlaceholderAPI"))
+            return PlaceholderAPI.setPlaceholders(player, string);
+        else
+            return string;
     }
 }

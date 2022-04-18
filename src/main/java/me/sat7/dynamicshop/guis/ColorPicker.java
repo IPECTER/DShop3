@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class ColorPicker extends InGameUI
@@ -23,7 +24,7 @@ public class ColorPicker extends InGameUI
 
     public Inventory getGui(Player player, int slotIndex)
     {
-        inventory = Bukkit.createInventory(player, 27, t(player, "COLOR_PICKER_TITLE"));
+        inventory = Bukkit.createInventory(player, 27, papi(player, t( "COLOR_PICKER_TITLE")));
 
         this.slotIndex = slotIndex;
 

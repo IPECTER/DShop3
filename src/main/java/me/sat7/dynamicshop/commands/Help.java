@@ -11,6 +11,7 @@ import me.sat7.dynamicshop.utilities.ShopUtil;
 import java.util.UUID;
 
 import static me.sat7.dynamicshop.constants.Constants.*;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public final class Help
@@ -34,40 +35,40 @@ public final class Help
 
         if (helpcode.equals("main"))
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "main"));
-            player.sendMessage(" - shop: " + t(player, "HELP.SHOP"));
-            player.sendMessage(" - qsell: " + t(player, "HELP.QSELL"));
-            player.sendMessage(" - cmdHelp: " + t(player, "HELP.CMD"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "main")));
+            player.sendMessage(" - shop: " + papi(player,t("HELP.SHOP")));
+            player.sendMessage(" - qsell: " + papi(player,t("HELP.QSELL")));
+            player.sendMessage(" - cmdHelp: " + papi(player,t("HELP.CMD")));
             if (player.hasPermission(P_ADMIN_CREATE_SHOP))
-                player.sendMessage("§e - createshop: " + t(player, "HELP.CREATE_SHOP"));
+                player.sendMessage("§e - createshop: " + papi(player,t("HELP.CREATE_SHOP")));
             if (player.hasPermission(P_ADMIN_DELETE_SHOP))
-                player.sendMessage("§e - deleteshop: " + t(player, "HELP.DELETE_SHOP"));
+                player.sendMessage("§e - deleteshop: " + papi(player,t("HELP.DELETE_SHOP")));
             if (player.hasPermission(P_ADMIN_RELOAD))
-                player.sendMessage("§e - reload: " + t(player, "HELP.RELOAD"));
+                player.sendMessage("§e - reload: " + papi(player,t("HELP.RELOAD")));
             player.sendMessage("");
         } else if (helpcode.equals("shop"))
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "shop"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "shop")));
 
-            player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop [<shopname>]");
+            player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop [<shopname>]"));
             if (player.hasPermission(P_ADMIN_SHOP_EDIT) || player.hasPermission(P_ADMIN_EDIT_ALL))
             {
-                player.sendMessage(" - " + t(player, "HELP.USAGE")
-                        + ": /ds shop <shopname> <enable | addhand | add | edit | editall | setToRecAll | sellbuy | permission | maxpage | flag | position | shophours | fluctuation | stockStabilizing | account | log>");
+                player.sendMessage(" - " + papi(player,t("HELP.USAGE")
+                        + ": /ds shop <shopname> <enable | addhand | add | edit | editall | setToRecAll | sellbuy | permission | maxpage | flag | position | shophours | fluctuation | stockStabilizing | account | log>"));
             }
 
             if (player.hasPermission(P_ADMIN_SHOP_EDIT))
             {
-                player.sendMessage("§e - enable: " + t(player, "HELP.SHOP_ENABLE"));
-                player.sendMessage("§e - addhand: " + t(player, "HELP.SHOP_ADD_HAND"));
-                player.sendMessage("§e - add: " + t(player, "HELP.SHOP_ADD_ITEM"));
-                player.sendMessage("§e - edit: " + t(player, "HELP.SHOP_EDIT"));
+                player.sendMessage("§e - enable: " + papi(player,t("HELP.SHOP_ENABLE")));
+                player.sendMessage("§e - addhand: " + papi(player,t("HELP.SHOP_ADD_HAND")));
+                player.sendMessage("§e - add: " + papi(player,t("HELP.SHOP_ADD_ITEM")));
+                player.sendMessage("§e - edit: " + papi(player,t("HELP.SHOP_EDIT")));
             }
 
             if (player.hasPermission(P_ADMIN_EDIT_ALL))
-                player.sendMessage("§e - editall: " + t(player, "HELP.EDIT_ALL"));
+                player.sendMessage("§e - editall: " + papi(player,t("HELP.EDIT_ALL")));
             if (player.hasPermission(P_ADMIN_SHOP_EDIT))
-                player.sendMessage("§e - setToRecAll: " + t(player, "HELP.SET_TO_REC_ALL"));
+                player.sendMessage("§e - setToRecAll: " + papi(player,t("HELP.SET_TO_REC_ALL")));
             player.sendMessage("");
         } else if (helpcode.equals("open_shop"))
         {
@@ -91,7 +92,7 @@ public final class Help
                 }
             } else
             {
-                player.sendMessage(" - " + t(player, "ERR.HAND_EMPTY2"));
+                player.sendMessage(" - " + papi(player,t("ERR.HAND_EMPTY2")));
             }
 
             player.sendMessage("");
@@ -128,7 +129,7 @@ public final class Help
                     if (idx != -1)
                     {
                         ItemsUtil.sendItemInfo(player, args[1], idx, "HELP.ITEM_INFO");
-                        player.sendMessage(" - " + t(player, "HELP.REMOVE_ITEM"));
+                        player.sendMessage(" - " + papi(player,t("HELP.REMOVE_ITEM")));
                         player.sendMessage("");
                     }
                 } catch (Exception ignored)

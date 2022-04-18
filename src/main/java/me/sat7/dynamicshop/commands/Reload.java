@@ -10,6 +10,7 @@ import me.sat7.dynamicshop.guis.StartPage;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_RELOAD;
 import static me.sat7.dynamicshop.utilities.ConfigUtil.configVersion;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public final class Reload extends DSCMD
@@ -24,8 +25,8 @@ public final class Reload extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "reload"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds reload");
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "reload")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds reload"));
 
         player.sendMessage("");
     }
@@ -64,6 +65,6 @@ public final class Reload extends DSCMD
 
         DynamicShop.plugin.getConfig().set("Version", configVersion);
 
-        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.RELOADED"));
+        sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("HELP.RELOADED")));
     }
 }

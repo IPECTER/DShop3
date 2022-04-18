@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class Log extends DSCMD
@@ -25,8 +26,8 @@ public class Log extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "log"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop <shop name> log < enable | disable | clear >");
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "log")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop <shop name> log < enable | disable | clear >"));
 
         player.sendMessage("");
     }
@@ -43,19 +44,19 @@ public class Log extends DSCMD
         if (args[3].equalsIgnoreCase("enable"))
         {
             shopData.get().set("Options.log", true);
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + shopName + "/" + t(sender, "LOG.LOG") + ": " + args[3]);
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + shopName + "/" + LangUtil.papi(sender,t("LOG.LOG") + ": " + args[3]));
         } else if (args[3].equalsIgnoreCase("disable"))
         {
             shopData.get().set("Options.log", null);
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + shopName + "/" + t(sender, "LOG.LOG") + ": " + args[3]);
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + shopName + "/" + LangUtil.papi(sender,t("LOG.LOG") + ": " + args[3]));
         } else if (args[3].equalsIgnoreCase("clear"))
         {
             LogUtil.ccLog.get().set(shopName, null);
             LogUtil.ccLog.save();
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + shopName + "/" + t(sender, "LOG.CLEAR"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + shopName + "/" + LangUtil.papi(sender,t("LOG.CLEAR")));
         } else
         {
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_USAGE"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.WRONG_USAGE")));
             return;
         }
 

@@ -11,8 +11,7 @@ import me.sat7.dynamicshop.constants.Constants;
 import me.sat7.dynamicshop.utilities.ShopUtil;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
-import static me.sat7.dynamicshop.utilities.LangUtil.n;
-import static me.sat7.dynamicshop.utilities.LangUtil.t;
+import static me.sat7.dynamicshop.utilities.LangUtil.*;
 
 public final class Shop
 {
@@ -55,7 +54,7 @@ public final class Shop
         // 그런 이름을 가진 상점이 있는지 확인
         if (player != null && !ShopUtil.shopConfigFiles.containsKey(shopName))
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.SHOP_NOT_FOUND"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.SHOP_NOT_FOUND")));
             return;
         }
 
@@ -70,7 +69,7 @@ public final class Shop
             {
                 if (!player.hasPermission(s) && !player.hasPermission(s + ".buy") && !player.hasPermission(s + ".sell"))
                 {
-                    player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.NO_PERMISSION"));
+                    player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.NO_PERMISSION")));
                     return;
                 }
             }
@@ -81,7 +80,7 @@ public final class Shop
             {
                 if (!player.hasPermission(Constants.P_ADMIN_REMOTE_ACCESS))
                 {
-                    player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.SIGN_SHOP_REMOTE_ACCESS"));
+                    player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.SIGN_SHOP_REMOTE_ACCESS")));
                     return;
                 }
             }
@@ -110,9 +109,9 @@ public final class Shop
 
                 if (outside && !player.hasPermission(Constants.P_ADMIN_REMOTE_ACCESS))
                 {
-                    player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.LOCAL_SHOP_REMOTE_ACCESS"));
+                    player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.LOCAL_SHOP_REMOTE_ACCESS")));
 
-                    String posString = t(player, "SHOP.SHOP_LOCATION");
+                    String posString = papi(player,t("SHOP.SHOP_LOCATION"));
                     posString = posString.replace("{x}", n(x1));
                     posString = posString.replace("{y}", n(y1));
                     posString = posString.replace("{z}", n(z1));
@@ -130,8 +129,8 @@ public final class Shop
                     String[] temp = shopConf.getString("shophours").split("~");
                     int open = Integer.parseInt(temp[0]);
 
-                    player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "TIME.SHOP_IS_CLOSED").
-                            replace("{time}", open + "").replace("{curTime}", curTime + ""));
+                    player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("TIME.SHOP_IS_CLOSED").
+                            replace("{time}", open + "").replace("{curTime}", curTime + "")));
                     return;
                 }
             }

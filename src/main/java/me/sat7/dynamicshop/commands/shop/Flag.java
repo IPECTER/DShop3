@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class Flag extends DSCMD
@@ -25,8 +26,8 @@ public class Flag extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "flag"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop <shopname> flag <flag> <set | unset>");
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "flag")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop <shopname> flag <flag> <set | unset>"));
 
         player.sendMessage("");
     }
@@ -53,7 +54,7 @@ public class Flag extends DSCMD
             set = false;
         } else
         {
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_USAGE"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.WRONG_USAGE")));
             return;
         }
 
@@ -128,10 +129,10 @@ public class Flag extends DSCMD
                 shopData.get().set("Options.flag." + args[3].toLowerCase(), null);
             }
             shopData.save();
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.CHANGES_APPLIED") + args[3] + " " + args[4]);
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("MESSAGE.CHANGES_APPLIED") + args[3] + " " + args[4]));
         } else
         {
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_USAGE"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.WRONG_USAGE")));
         }
     }
 }

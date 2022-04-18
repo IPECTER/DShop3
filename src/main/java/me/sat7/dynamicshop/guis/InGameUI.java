@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class InGameUI
@@ -110,7 +111,7 @@ public class InGameUI
     @SuppressWarnings("SameParameterValue")
     protected void CreateCloseButton(Player player, int slotIndex)
     {
-        CreateButton(slotIndex, InGameUI.GetCloseButtonIconMat(), t(player, "CLOSE"), t(player, "CLOSE_LORE"));
+        CreateButton(slotIndex, InGameUI.GetCloseButtonIconMat(), papi(player,t("CLOSE")), papi(player,t("CLOSE_LORE")));
     }
 
     public static Material GetCloseButtonIconMat()

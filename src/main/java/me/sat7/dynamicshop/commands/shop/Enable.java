@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class Enable extends DSCMD
@@ -24,8 +25,8 @@ public class Enable extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "enable"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop <shopname> <true|false>");
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "enable")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop <shopname> <true|false>"));
         player.sendMessage("");
     }
 
@@ -41,14 +42,14 @@ public class Enable extends DSCMD
         if (args[3].equalsIgnoreCase("true"))
         {
             shopData.get().set("Options.enable", true);
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.CHANGES_APPLIED") + t(sender, "SHOP_SETTING.STATE") + ":" + args[3]);
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("MESSAGE.CHANGES_APPLIED") + LangUtil.papi(sender,t("SHOP_SETTING.STATE") + ":" + args[3])));
         } else if (args[3].equalsIgnoreCase("false"))
         {
             shopData.get().set("Options.enable", false);
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.CHANGES_APPLIED") + t(sender, "SHOP_SETTING.STATE") + ":" + args[3]);
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("MESSAGE.CHANGES_APPLIED") + LangUtil.papi(sender,t("SHOP_SETTING.STATE") + ":" + args[3])));
         } else
         {
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_USAGE"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.WRONG_USAGE")));
             return;
         }
 

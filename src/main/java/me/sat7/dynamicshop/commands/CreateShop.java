@@ -1,6 +1,7 @@
 package me.sat7.dynamicshop.commands;
 
 import me.sat7.dynamicshop.files.CustomConfig;
+import me.sat7.dynamicshop.utilities.LangUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -9,6 +10,7 @@ import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.utilities.ShopUtil;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_CREATE_SHOP;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public final class CreateShop extends DSCMD
@@ -24,9 +26,9 @@ public final class CreateShop extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "createshop"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds create <shopname> [<permission>]");
-        player.sendMessage(" - " + t(player, "HELP.CREATE_SHOP_2"));
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "createshop")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds create <shopname> [<permission>]"));
+        player.sendMessage(" - " + papi(player,t("HELP.CREATE_SHOP_2")));
 
         player.sendMessage("");
     }
@@ -76,14 +78,14 @@ public final class CreateShop extends DSCMD
 
             ShopUtil.shopConfigFiles.put(shopname, data);
 
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.SHOP_CREATED"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("MESSAGE.SHOP_CREATED")));
 
             if(player != null)
                 DynaShopAPI.openShopGui(player, shopname, 1);
         }
         else
         {
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_EXIST"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.SHOP_EXIST")));
         }
     }
 }

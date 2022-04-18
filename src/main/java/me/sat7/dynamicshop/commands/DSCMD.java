@@ -2,12 +2,14 @@ package me.sat7.dynamicshop.commands;
 
 import me.sat7.dynamicshop.DynamicShop;
 import me.sat7.dynamicshop.constants.Constants;
+import me.sat7.dynamicshop.utilities.LangUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class DSCMD
@@ -33,14 +35,14 @@ public class DSCMD
         {
             if (validArgCount.size() != 0 && Collections.max(validArgCount) >= args.length)
             {
-                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_USAGE"));
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.WRONG_USAGE")));
                 return false;
             }
         }
 
         if (permission != null && !permission.isEmpty() && !sender.hasPermission(permission))
         {
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.NO_PERMISSION"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.NO_PERMISSION")));
             return false;
         }
 

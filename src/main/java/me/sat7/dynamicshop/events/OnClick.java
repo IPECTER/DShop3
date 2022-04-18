@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class OnClick implements Listener
@@ -41,7 +42,7 @@ public class OnClick implements Listener
             {
                 if (!DynaShopAPI.recreateUserData(player))
                 {
-                    player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.NO_USER_ID"));
+                    player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.NO_USER_ID")));
                     e.setCancelled(true);
                     return;
                 }

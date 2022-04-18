@@ -5,7 +5,6 @@ import me.sat7.dynamicshop.commands.DSCMD;
 import me.sat7.dynamicshop.commands.Shop;
 import me.sat7.dynamicshop.files.CustomConfig;
 import me.sat7.dynamicshop.jobshook.JobsHook;
-import me.sat7.dynamicshop.utilities.LangUtil;
 import me.sat7.dynamicshop.utilities.ShopUtil;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -14,8 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
-import static me.sat7.dynamicshop.utilities.LangUtil.n;
-import static me.sat7.dynamicshop.utilities.LangUtil.t;
+import static me.sat7.dynamicshop.utilities.LangUtil.*;
 
 public class Account extends DSCMD
 {
@@ -30,11 +28,11 @@ public class Account extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "account"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop <shopname> account set <amount>");
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop <shopname> account linkto <shopname>");
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop <shopname> account transfer <target> <amount>");
-        player.sendMessage(" - " + t(player, "HELP.ACCOUNT"));
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "account")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop <shopname> account set <amount>"));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop <shopname> account linkto <shopname>"));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop <shopname> account transfer <target> <amount>"));
+        player.sendMessage(" - " + papi(player,t("HELP.ACCOUNT")));
 
         player.sendMessage("");
     }
@@ -57,16 +55,16 @@ public class Account extends DSCMD
                     if (Double.parseDouble(args[4]) < 0)
                     {
                         shopData.get().set("Options.Balance", null);
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.CHANGES_APPLIED") + t(sender, "SHOP.SHOP_BAL_INF"));
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("MESSAGE.CHANGES_APPLIED") + papi(sender,t("SHOP.SHOP_BAL_INF"))));
                     } else
                     {
                         shopData.get().set("Options.Balance", Double.parseDouble(args[4]));
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.CHANGES_APPLIED") + args[4]);
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("MESSAGE.CHANGES_APPLIED") + args[4]));
                     }
                     shopData.save();
                 } catch (Exception e)
                 {
-                    sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_DATATYPE"));
+                    sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.WRONG_DATATYPE")));
                     return;
                 }
                 break;
@@ -74,7 +72,7 @@ public class Account extends DSCMD
                 // 그런 상점(타깃) 없음
                 if (!ShopUtil.shopConfigFiles.containsKey(args[4]))
                 {
-                    sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_NOT_FOUND"));
+                    sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.SHOP_NOT_FOUND")));
                     return;
                 }
 
@@ -87,7 +85,7 @@ public class Account extends DSCMD
                         Double temp = Double.parseDouble(targetShopData.get().getString("Options.Balance"));
                     } catch (Exception e)
                     {
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_LINK_TARGET_ERR"));
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.SHOP_LINK_TARGET_ERR")));
                         return;
                     }
                 }
@@ -100,7 +98,7 @@ public class Account extends DSCMD
                     {
                         if (temp != null && temp.equals(args[1]))
                         {
-                            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.NESTED_STRUCTURE"));
+                            sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.NESTED_STRUCTURE")));
                             return;
                         }
                     } catch (Exception e)
@@ -112,26 +110,26 @@ public class Account extends DSCMD
                 // 출발 상점과 도착 상점이 같음
                 if (args[1].equals(args[4]))
                 {
-                    sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_USAGE"));
+                    sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.WRONG_USAGE")));
                     return;
                 }
 
                 // 출발 상점과 도착 상점의 통화 유형이 다름
                 if (shopData.get().contains("Options.flag.jobpoint") != targetShopData.get().contains("Options.flag.jobpoint"))
                 {
-                    sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_DIFF_CURRENCY"));
+                    sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.SHOP_DIFF_CURRENCY")));
                     return;
                 }
 
                 shopData.get().set("Options.Balance", args[4]);
                 shopData.save();
-                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.CHANGES_APPLIED") + args[4]);
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("MESSAGE.CHANGES_APPLIED") + args[4]));
                 break;
             case "transfer":
                 //[4] 대상 [5] 금액
                 if (args.length < 6)
                 {
-                    sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_USAGE"));
+                    sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.WRONG_USAGE")));
                     return;
                 }
 
@@ -142,14 +140,14 @@ public class Account extends DSCMD
                     amount = Double.parseDouble(args[5]);
                 } catch (Exception e)
                 {
-                    sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_DATATYPE"));
+                    sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.WRONG_DATATYPE")));
                     return;
                 }
 
                 // 출발 상점이 무한계좌임
                 if (!shopData.get().contains("Options.Balance"))
                 {
-                    sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_HAS_INF_BAL").replace("{shop}", args[1]));
+                    sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.SHOP_HAS_INF_BAL").replace("{shop}", args[1])));
                     return;
                 }
 
@@ -158,12 +156,12 @@ public class Account extends DSCMD
                 {
                     if (shopData.get().contains("Options.flag.jobpoint"))
                     {
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.NOT_ENOUGH_POINT").
-                                replace("{bal}", n(ShopUtil.getShopBalance(args[1]))));
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("MESSAGE.NOT_ENOUGH_POINT").
+                                replace("{bal}", n(ShopUtil.getShopBalance(args[1])))));
                     } else
                     {
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.NOT_ENOUGH_MONEY").
-                                replace("{bal}", n(ShopUtil.getShopBalance(args[1]))));
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("MESSAGE.NOT_ENOUGH_MONEY").
+                                replace("{bal}", n(ShopUtil.getShopBalance(args[1])))));
                     }
                     return;
                 }
@@ -174,21 +172,21 @@ public class Account extends DSCMD
                     // 도착 상점이 무한계좌임
                     if (!targetShopData.get().contains("Options.Balance"))
                     {
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_HAS_INF_BAL").replace("{shop}", args[4]));
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.SHOP_HAS_INF_BAL").replace("{shop}", args[4])));
                         return;
                     }
 
                     // 출발 상점과 도착 상점이 같음
                     if (args[1].equals(args[4]))
                     {
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_USAGE"));
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.WRONG_USAGE")));
                         return;
                     }
 
                     // 출발 상점과 도착 상점의 통화 유형이 다름
                     if (shopData.get().contains("Options.flag.jobpoint") != targetShopData.get().contains("Options.flag.jobpoint"))
                     {
-                        sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_DIFF_CURRENCY"));
+                        sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.SHOP_DIFF_CURRENCY")));
                         return;
                     }
 
@@ -199,7 +197,7 @@ public class Account extends DSCMD
                     shopData.save();
                     targetShopData.save();
 
-                    sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.TRANSFER_SUCCESS"));
+                    sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("MESSAGE.TRANSFER_SUCCESS")));
                 }
                 // 플레이어에게 송금
                 else
@@ -210,7 +208,7 @@ public class Account extends DSCMD
 
                         if (target == null)
                         {
-                            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.PLAYER_NOT_EXIST"));
+                            sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("ERR.PLAYER_NOT_EXIST")));
                             return;
                         }
 
@@ -220,7 +218,7 @@ public class Account extends DSCMD
                             ShopUtil.addShopBalance(args[1], amount * -1);
                             shopData.save();
 
-                            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.TRANSFER_SUCCESS"));
+                            sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("MESSAGE.TRANSFER_SUCCESS")));
                         } else
                         {
                             Economy econ = DynamicShop.getEconomy();
@@ -231,7 +229,7 @@ public class Account extends DSCMD
                                 ShopUtil.addShopBalance(args[1], amount * -1);
                                 shopData.save();
 
-                                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.TRANSFER_SUCCESS"));
+                                sender.sendMessage(DynamicShop.dsPrefix(sender) + papi(sender,t("MESSAGE.TRANSFER_SUCCESS")));
                             } else
                             {
                                 sender.sendMessage(DynamicShop.dsPrefix(sender) + "Transfer failed");

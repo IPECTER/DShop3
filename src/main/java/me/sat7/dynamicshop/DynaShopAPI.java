@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public final class DynaShopAPI
@@ -41,11 +42,11 @@ public final class DynaShopAPI
         {
             if(player.hasPermission(P_ADMIN_SHOP_EDIT))
             {
-                player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.SHOP_DISABLED"));
+                player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("MESSAGE.SHOP_DISABLED")));
             }
             else
             {
-                player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.SHOP_IS_CLOSED_BY_ADMIN"));
+                player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("MESSAGE.SHOP_IS_CLOSED_BY_ADMIN")));
                 return;
             }
         }
@@ -73,11 +74,11 @@ public final class DynaShopAPI
         {
             if(player.hasPermission(P_ADMIN_SHOP_EDIT))
             {
-                //player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.SHOP_DISABLED"));
+                //player.sendMessage(DynamicShop.dsPrefix(player) + p(player,t("MESSAGE.SHOP_DISABLED"));
             }
             else
             {
-                player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.SHOP_IS_CLOSED_BY_ADMIN"));
+                player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("MESSAGE.SHOP_IS_CLOSED_BY_ADMIN")));
                 return;
             }
         }

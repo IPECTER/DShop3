@@ -1,14 +1,15 @@
 package me.sat7.dynamicshop.commands;
 
-import java.util.UUID;
-
+import me.sat7.dynamicshop.DynamicShop;
+import me.sat7.dynamicshop.utilities.LangUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.sat7.dynamicshop.DynamicShop;
+import java.util.UUID;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_DELETE_OLD_USER;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public final class DeleteUser extends DSCMD
@@ -23,10 +24,10 @@ public final class DeleteUser extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "§c§ldeleteOldUser§f§r"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds deleteOldUser <days>");
-        player.sendMessage(" - " + t(player, "HELP.DELETE_OLD_USER"));
-        player.sendMessage(" - " + t(player, "MESSAGE.IRREVERSIBLE"));
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "§c§ldeleteOldUser§f§r")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds deleteOldUser <days>"));
+        player.sendMessage(" - " + papi(player,t("HELP.DELETE_OLD_USER")));
+        player.sendMessage(" - " + papi(player,t("MESSAGE.IRREVERSIBLE")));
 
         player.sendMessage("");
     }
@@ -44,13 +45,13 @@ public final class DeleteUser extends DSCMD
             day = Long.parseLong(args[1]);
         } catch (Exception e)
         {
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_DATATYPE"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.WRONG_DATATYPE")));
             return;
         }
 
         if (day <= 0)
         {
-            sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.VALUE_ZERO"));
+            sender.sendMessage(DynamicShop.dsPrefix(sender) + LangUtil.papi(sender,t("ERR.VALUE_ZERO")));
             return;
         }
 

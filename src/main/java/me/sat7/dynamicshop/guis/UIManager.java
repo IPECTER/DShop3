@@ -47,7 +47,7 @@ public class UIManager implements Listener
             {
                 player.openInventory(inventory); // 가장 먼저 불려야함. (버킷에서 새 인벤이 열릴때 기존의 것이 닫힘처리됨)
 
-                currentUI.put(player, inGameUI);
+                currentUI.put(player,inGameUI);
             }
         }.runTask(DynamicShop.plugin);
     }
@@ -78,7 +78,7 @@ public class UIManager implements Listener
         if (inGameUI == null)
             return;
 
-        SoundUtil.playerSoundEffect(player, "click");
+        SoundUtil.playerSoundEffect(player,"click");
         inGameUI.OnClickUpperInventory(e);
     }
 
@@ -89,7 +89,7 @@ public class UIManager implements Listener
         if (inGameUI == null)
             return;
 
-        SoundUtil.playerSoundEffect(player, "click");
+        SoundUtil.playerSoundEffect(player,"click");
         inGameUI.OnClickLowerInventory(e);
     }
 

@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static me.sat7.dynamicshop.constants.Constants.P_ADMIN_SHOP_EDIT;
+import static me.sat7.dynamicshop.utilities.LangUtil.papi;
 import static me.sat7.dynamicshop.utilities.LangUtil.t;
 
 public class Position extends DSCMD
@@ -22,8 +23,8 @@ public class Position extends DSCMD
     @Override
     public void SendHelpMessage(Player player)
     {
-        player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "HELP.TITLE").replace("{command}", "position"));
-        player.sendMessage(" - " + t(player, "HELP.USAGE") + ": /ds shop <shopname> position <pos1 | pos2 | clear>");
+        player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("HELP.TITLE").replace("{command}", "position")));
+        player.sendMessage(" - " + papi(player,t("HELP.USAGE") + ": /ds shop <shopname> position <pos1 | pos2 | clear>"));
 
         player.sendMessage("");
     }
@@ -60,7 +61,7 @@ public class Position extends DSCMD
             player.sendMessage(DynamicShop.dsPrefix(player) + "clear");
         } else
         {
-            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.WRONG_USAGE"));
+            player.sendMessage(DynamicShop.dsPrefix(player) + papi(player,t("ERR.WRONG_USAGE")));
         }
     }
 }
